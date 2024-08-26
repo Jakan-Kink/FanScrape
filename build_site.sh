@@ -6,12 +6,13 @@
 
 # Directory where the repo is cloned
 repo_dir=$(pwd)
-stable_dir="$repo_dir/stable"
-
+stable_dir="$1"
+if [ -z "$stable_dir" ]; then
+    stable_dir="_site"
+fi
 # Ensure the stable directory exists and clear previous outputs
 rm -rf "$stable_dir"
 mkdir -p "$stable_dir"
-> "$stable_dir/index.yml"
 
 buildScraper()
 {
@@ -28,7 +29,7 @@ buildScraper()
     updated=$(TZ=UTC0 git log -n 1 --date="format-local:%F %T" --pretty=format:%ad)
 
     # Create a directory for the output (if not already existing)
-    outdir="${repo_dir}/output_${branch}"
+    outdir="${stable_dir}/output_${branch}"
     mkdir -p "$outdir"
 
     # Define the zip file path
@@ -52,7 +53,7 @@ buildScraper()
   path: $zipfile
   sha256: $(sha256sum "$zipfile" | cut -d' ' -f1)" >> "$outdir"/index.yml
 
-    echo "" >> "$outdir"/index.yml
+    echo "" >> "$stable_dir"/index.yml
 }
 
 # Get a list of all branches
