@@ -19,7 +19,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: '0'
+        fetch-depth: 0
 
     - name: Fetch all branches
       run: git fetch --all
@@ -31,8 +31,6 @@ jobs:
 
     - name: Upload artifacts
       uses: actions/upload-pages-artifact@v3
-      with:
-        path: _site/stable  # Upload the stable directory and its contents
 
   deploy:
     environment:
