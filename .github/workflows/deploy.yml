@@ -23,12 +23,15 @@ jobs:
         ref: main
         fetch-depth: '0'
 
+    - name: switch to repo folder
+      run: |
+        cd main
+
     - name: Fetch all branches
       run: git fetch --all
 
     - name: Run buildScraper script
       run: |
-        cd main
         chmod +x build_site.sh
         ./build_site.sh ../_site/stable
 
