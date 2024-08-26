@@ -44,7 +44,7 @@ buildScraper()
   name: \"$name\"
   version: $version
   date: $updated
-  path: $zipfile
+  path: output_${branch}/fanscrape_${branch}.zip
   sha256: $(sha256sum "$zipfile" | cut -d' ' -f1)" >> "$stable_dir"/index.yml
 
     echo "" >> "$stable_dir"/index.yml
