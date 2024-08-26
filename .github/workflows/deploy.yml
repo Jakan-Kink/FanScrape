@@ -1,7 +1,5 @@
 name: Deploy repository to Github Pages
 # This action is from the stashapp/CommunityScrapers repo https://github.com/stashapp/CommunityScrapers/blob/stable/.github/workflows/deploy.yml
-env:
-  BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
 
 on:
   push:
@@ -16,28 +14,28 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout main
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        path: main
-        ref: ${{ env.BRANCH_NAME }}
         fetch-depth: '0'
-    - run: |
-        cd main
-        if [ "${{ env.BRANCH_NAME }}" = "main" ]; then
-          ./build_site.sh ../_site/stable
-        else
-          ./build_site.sh ../_site/${{ env.BRANCH_NAME }}
-        fi
+
+    - name: Run buildScraper script
+      run: |
+        chmod +x build_site.sh
+        ./build_site.sh
+
     - uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./stable
 
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-22.04
+
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Deploy to GitHub Pages
