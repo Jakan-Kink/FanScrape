@@ -21,9 +21,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Fetch all branches
-      run: git fetch --all
-
     - name: Run buildScraper script
       run: |
         chmod +x build_site.sh
