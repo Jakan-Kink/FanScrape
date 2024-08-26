@@ -54,9 +54,9 @@ buildScraper()
 rm -rf "$stable_dir"
 mkdir -p "$stable_dir"
 
+for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done
 git for-each-ref --format='%(refname:short)' refs/heads/
 git for-each-ref --format='%(refname:short)' refs/remotes/origin/
-git fetch --all
 # Get a list of all branches
 branches=$(git for-each-ref --format='%(refname:short)' refs/heads/)
 
