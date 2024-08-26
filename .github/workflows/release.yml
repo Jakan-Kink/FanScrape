@@ -11,6 +11,8 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_prerelease_bump: none
+          release_branches: main
       - name: Archive Release
         uses: thedoctor0/zip-release@0.7.6
         with:
@@ -27,3 +29,5 @@ jobs:
           generateReleaseNotes: true
           makeLatest: ${{ github.ref == 'refs/heads/main' }}
           prerelease: ${{ github.ref != 'refs/heads/main' }}
+          updateOnlyUnreleased: true
+          allowUpdates: true
