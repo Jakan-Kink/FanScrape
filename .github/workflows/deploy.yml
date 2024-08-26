@@ -19,13 +19,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        path: main
-        ref: main
         fetch-depth: '0'
-
-    - name: switch to repo folder
-      run: |
-        cd main
 
     - name: Fetch all branches
       run: git fetch --all
@@ -33,10 +27,12 @@ jobs:
     - name: Run buildScraper script
       run: |
         chmod +x build_site.sh
-        ./build_site.sh ../_site/stable
+        ./build_site.sh _site/stable
 
-    - uses: actions/upload-pages-artifact@v3
-
+    - name: Upload artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: _site/stable  # Upload the stable directory and its contents
 
   deploy:
     environment:

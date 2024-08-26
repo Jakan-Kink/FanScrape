@@ -7,12 +7,6 @@
 # Directory where the repo is cloned
 repo_dir=$(pwd)
 stable_dir="$1"
-if [ -z "$stable_dir" ]; then
-    stable_dir="_site"
-fi
-# Ensure the stable directory exists and clear previous outputs
-rm -rf "$stable_dir"
-mkdir -p "$stable_dir"
 
 buildScraper()
 {
@@ -46,15 +40,19 @@ buildScraper()
     fi
 
     # Write to index.yml
-    echo "- id: fanscrape
+    echo "- id: $name
   name: \"$name\"
   version: $version
   date: $updated
-  path: $zipfile
+  path: fanscrape_${branch}.zip
   sha256: $(sha256sum "$zipfile" | cut -d' ' -f1)" >> "$outdir"/index.yml
 
     echo "" >> "$stable_dir"/index.yml
 }
+
+# Ensure the stable directory exists and clear previous outputs
+rm -rf "$stable_dir"
+mkdir -p "$stable_dir"
 
 # Get a list of all branches
 branches=$(git for-each-ref --format='%(refname:short)' refs/heads/)
