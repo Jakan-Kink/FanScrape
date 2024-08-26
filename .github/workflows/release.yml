@@ -16,7 +16,7 @@ jobs:
         with:
           type: "zip"
           filename: "fanscrape.zip"
-          exclusions: "*.git* .editorconfig .flake8 .pre-commit-config.yaml"
+          exclusions: "*.git* .editorconfig .flake8 .pre-commit-config.yaml README.md build_site.sh"
       - name: Upload Release
         uses: ncipollo/release-action@v1.14.0
         with:
@@ -24,3 +24,6 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
+          makeLatest: ${{ github.ref == 'refs/heads/main' }}
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
