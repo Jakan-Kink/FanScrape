@@ -192,7 +192,7 @@ def lookup_scene(file, db, media_dir, username, network):
             WHERE medias.filename = ?
         ) AS match
         ON medias.post_id = match.post_id
-        WHERE medias.media_type = 'Videos'
+        WHERE medias.media_type in  ('Videos','Audios')
         ORDER BY medias.id ASC
     """,
         (file.name,),
@@ -260,10 +260,13 @@ def lookup_scene(file, db, media_dir, username, network):
             """
             c.execute(query, (file.name,))
             row = c.fetchone()
+            raise Exception("No data in the table") if row is None else None
     except Exception as e:
         log.error(
             f"The {db} is an old schema and {post_id} doesn't have any data in the {api_type} table.\n {e}"
         )
+        print("null")
+        sys.exit()
 
     scene = process_row(row, username, network, file.name, scene_index, scene_count)
     # log.debug(f'Date is: {scene["date"]}')
