@@ -4,7 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    rebase-strategy: auto
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    rebase-strategy: auto
