@@ -27,7 +27,7 @@ jobs:
         ./build_site.sh _site/stable
 
     - name: Upload artifacts
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v5
 
   deploy:
     environment:
